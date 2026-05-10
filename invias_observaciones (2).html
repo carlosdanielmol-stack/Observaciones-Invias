@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INVIAS — Observaciones a Pliegos</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--verde:#1A1A1A;--verde-h:#000000;--verde-pale:#F5F5F5;--verde-mid:#D4D4D4;--amarillo:#F5A800;--amarillo-pale:#FEF3DC;--g1:#111111;--g2:#333333;--g3:#777777;--g4:#BBBBBB;--g5:#E5E5E5;--g6:#F7F7F7;--blanco:#FFFFFF;--rojo:#B83030;--rojo-pale:#FCEAEA;--azul:#1A5FA8;--azul-pale:#E8F0FB;--naranja:#E8890A;--sh-sm:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.05);--sh-md:0 4px 16px rgba(0,0,0,.10),0 1px 4px rgba(0,0,0,.06);--sh-lg:0 12px 40px rgba(0,0,0,.16),0 4px 12px rgba(0,0,0,.10);--r:10px;--rsm:6px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--g6);color:var(--g1);min-height:100vh}
+.screen{display:none;min-height:100vh}
+.screen.on{display:flex;flex-direction:column}
+
+/* LANDING */
+#s-land{align-items:center;justify-content:center;background:linear-gradient(160deg,#1A1A1A 0%,#2a2a2a 50%,#111 100%);position:relative;overflow:hidden}
+#s-land::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 20%,rgba(245,168,0,.12) 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(245,168,0,.07) 0%,transparent 50%)}
+#s-land::after{content:'';position:absolute;bottom:-60px;right:-60px;width:300px;height:300px;background:conic-gradient(from 45deg,#F5A800,#E8890A,#F5A800);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);opacity:.06}
+.lcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:2.75rem 2.25rem;text-align:center;max-width:460px;width:92%;backdrop-filter:blur(20px);box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.05);animation:fadeUp .5s ease}
+.llogo{width:80px;height:80px;margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:center}
+.ltitle{font-size:20px;font-weight:700;color:#fff;margin-bottom:.4rem;letter-spacing:-.3px}
+.ltitle span{color:var(--amarillo)}
+.lsub{font-size:12.5px;color:rgba(255,255,255,.45);margin-bottom:.35rem;line-height:1.7}
+.lsub2{font-size:11px;color:rgba(255,255,255,.3);margin-bottom:2.25rem;font-style:italic}
+.ldiv{height:1px;background:rgba(255,255,255,.08);margin:1.25rem 0;position:relative}
+.ldiv span{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#1e1e1e;color:rgba(255,255,255,.25);font-size:11px;padding:0 12px}
+.lbtn{display:flex;align-items:center;gap:12px;padding:13px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:rgba(255,255,255,.85);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:500;cursor:pointer;width:100%;margin-bottom:10px;transition:all .2s;text-align:left}
+.lbtn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);transform:translateX(3px)}
+.lbtn-p{background:linear-gradient(135deg,#F5A800 0%,#E8890A 100%);border-color:transparent;color:#111;font-weight:600;box-shadow:0 4px 20px rgba(245,168,0,.35)}
+.lbtn-p:hover{background:linear-gradient(135deg,#ffb81a 0%,#F5A800 100%);transform:translateX(3px);box-shadow:0 6px 28px rgba(245,168,0,.45)}
+.lbtn-p svg{color:#111}
+
+/* HEADER */
+.hdr{background:#111111;border-bottom:3px solid var(--amarillo);padding:0 2rem;height:58px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.hbrand{display:flex;align-items:center;gap:10px}
+.hlogo{width:32px;height:32px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.htitle{color:#fff;font-size:13px;font-weight:500;line-height:1.3}
+.hsub{color:rgba(255,255,255,.45);font-size:11px}
+.hback{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;font-family:'DM Sans',sans-serif;font-size:12px;padding:6px 14px;border-radius:6px;cursor:pointer;transition:background .2s}
+.hback:hover{background:rgba(255,255,255,.18)}
+
+/* PÚBLIC BODY */
+.pbody{flex:1;padding:2rem;max-width:740px;margin:0 auto;width:100%}
+.scard{background:var(--blanco);border:1px solid var(--g5);border-radius:var(--r);box-shadow:var(--sh-sm);padding:1.5rem;margin-bottom:1.5rem}
+.scard h2{font-size:16px;font-weight:600;margin-bottom:.4rem}
+.scard p{font-size:13px;color:var(--g3);margin-bottom:1rem;line-height:1.6}
+.srow{display:flex;gap:10px}
+.sinput{flex:1;font-family:'DM Sans',sans-serif;font-size:14px;padding:10px 14px;border:1px solid var(--g5);border-radius:var(--rsm);background:var(--g6);color:var(--g1);outline:none;transition:border-color .15s}
+.sinput:focus{border-color:var(--verde);box-shadow:0 0 0 3px rgba(0,97,58,.08);background:var(--blanco)}
+.sbtn{background:#111;color:#fff;border:none;border-radius:var(--rsm);padding:10px 22px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:background .15s;white-space:nowrap}
+.sbtn:hover{background:#000}
+
+/* PROCESO CARD */
+.pcard{background:var(--blanco);border:1px solid var(--g5);border-radius:var(--r);box-shadow:var(--sh-sm);overflow:hidden;margin-bottom:1.5rem;animation:fadeUp .3s ease}
+.pcard-hd{background:#FEF3DC;border-bottom:1px solid #F5C842;padding:1rem 1.25rem;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.pcodigo{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:#7a4800;margin-bottom:3px}
+.pnick{font-size:15px;font-weight:600;color:var(--g1)}
+.pbadge{background:#111;color:#F5A800;font-family:'DM Mono',monospace;font-size:12px;padding:3px 10px;border-radius:20px;white-space:nowrap;flex-shrink:0}
+.olist{padding:.5rem 1.25rem}
+.oitem{border-bottom:1px solid var(--g5);padding:1rem 0}
+.oitem:last-child{border-bottom:none}
+.owho{font-size:13px;font-weight:600;margin-bottom:2px}
+.odate{font-size:11px;color:var(--g3);font-family:'DM Mono',monospace}
+.otext{font-size:13px;color:var(--g2);line-height:1.6;margin:.5rem 0}
+.rbox{background:#FEF3DC;border-left:3px solid #E8890A;border-radius:0 var(--rsm) var(--rsm) 0;padding:.75rem 1rem;margin-top:.5rem}
+.rlabel{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7a4800;margin-bottom:4px}
+.rtext{font-size:13px;color:var(--g2);line-height:1.6}
+.rpend{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--g3);background:var(--g5);padding:3px 9px;border-radius:20px}
+.nobs{border-top:1px solid var(--g5);padding:1.25rem}
+.nobs-title{font-size:13px;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:7px}
+.nobs-title::before{content:'';width:3px;height:15px;background:var(--amarillo);border-radius:2px;flex-shrink:0}
+
+/* CAMPOS */
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:12px;font-weight:500;color:var(--g2);margin-bottom:5px}
+.field input,.field textarea{width:100%;font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;border:1px solid var(--g5);border-radius:var(--rsm);background:var(--g6);color:var(--g1);outline:none;transition:border-color .15s}
+.field input:focus,.field textarea:focus{border-color:var(--verde);background:var(--blanco);box-shadow:0 0 0 3px rgba(0,97,58,.07)}
+.field textarea{resize:vertical;min-height:80px}
+.field input.err,.field textarea.err{border-color:var(--rojo)}
+.emsg{font-size:11px;color:var(--rojo);margin-top:4px;display:none}
+.emsg.on{display:block}
+
+/* BOTONES */
+.btn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:8px 16px;border-radius:var(--rsm);border:1px solid var(--g4);background:var(--blanco);color:var(--g1);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{background:var(--g5)}
+.btn-green{background:#111;color:#fff;border-color:#111}
+.btn-green:hover{background:#000;border-color:#000}
+.btn-red{color:var(--rojo);border-color:transparent;background:transparent}
+.btn-red:hover{background:var(--rojo-pale)}
+.btn-blue{background:var(--azul);color:#fff;border-color:var(--azul)}
+.btn-blue:hover{background:#154d8c}
+.btn-sm{padding:5px 11px;font-size:12px}
+.factions{display:flex;gap:10px;justify-content:flex-end;margin-top:.5rem}
+
+/* ADMIN LAYOUT */
+.alayout{display:grid;grid-template-columns:224px 1fr;flex:1;min-height:0}
+.aside{background:#0D0D0D;display:flex;flex-direction:column;padding:1.25rem 0;border-right:1px solid #222}
+.aside-top{padding:0 1.25rem 1.25rem;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:.75rem}
+.alogo-row{display:flex;align-items:center;gap:10px;margin-bottom:.25rem}
+.alogo{width:30px;height:30px;background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.aname{font-size:13px;font-weight:500;color:#fff}
+.arole{font-size:10px;color:rgba(255,255,255,.35)}
+.abadge{background:var(--amarillo);color:#111;font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px;text-transform:uppercase;letter-spacing:.04em;margin-top:.5rem;display:inline-block}
+.nslabel{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.22);padding:0 1.25rem;margin:1rem 0 .35rem}
+.nbtn{display:flex;align-items:center;gap:10px;padding:9px 1.25rem;font-family:'DM Sans',sans-serif;font-size:13px;color:rgba(255,255,255,.5);background:none;border:none;width:100%;cursor:pointer;transition:all .15s;text-align:left;border-left:3px solid transparent}
+.nbtn:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.05)}
+.nbtn.on{color:#fff;background:rgba(245,168,0,.12);border-left-color:var(--amarillo)}
+.nbtn svg{opacity:.55;flex-shrink:0}
+.nbtn.on svg{opacity:1}
+.nc{margin-left:auto;background:rgba(255,255,255,.1);color:rgba(255,255,255,.65);font-size:10px;font-family:'DM Mono',monospace;padding:1px 7px;border-radius:10px}
+.nbtn.on .nc{background:var(--amarillo);color:#111}
+.aside-foot{margin-top:auto;padding:1rem 1.25rem;border-top:1px solid rgba(255,255,255,.07)}
+.logoutbtn{display:flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;font-size:13px;color:rgba(255,255,255,.3);background:none;border:none;cursor:pointer;transition:color .15s;padding:4px 0}
+.logoutbtn:hover{color:rgba(255,255,255,.65)}
+
+.amain{background:var(--g6);overflow-y:auto;display:flex;flex-direction:column}
+.atopbar{background:var(--blanco);border-bottom:1px solid var(--g5);padding:0 1.75rem;height:52px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.atitle{font-size:15px;font-weight:600}
+.asub{font-size:12px;color:var(--g3)}
+.acontent{padding:1.75rem;flex:1}
+.panel{display:none}.panel.on{display:block;animation:fadeUp .25s ease}
+
+/* KPI */
+.krow{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.kbox{background:var(--blanco);border:1px solid var(--g5);border-radius:var(--r);padding:1.1rem 1.25rem;box-shadow:var(--sh-sm);position:relative;overflow:hidden}
+.kbox::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0}
+.kbox.vd::after{background:var(--amarillo)}.kbox.am::after{background:var(--amarillo)}.kbox.az::after{background:var(--azul)}.kbox.rd::after{background:var(--rojo)}
+.klbl{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--g3);font-weight:600;margin-bottom:6px}
+.kval{font-size:28px;font-weight:600;font-family:'DM Mono',monospace;line-height:1;color:#111}
+.ksub{font-size:11px;color:var(--g3);margin-top:4px}
+
+/* CARD */
+.card{background:var(--blanco);border:1px solid var(--g5);border-radius:var(--r);box-shadow:var(--sh-sm);margin-bottom:1.25rem;overflow:hidden}
+.card-hd{padding:.875rem 1.25rem;border-bottom:1px solid var(--g5);display:flex;align-items:center;justify-content:space-between;background:var(--blanco)}
+.card-t{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--g3)}
+.card-b{padding:1.25rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+
+/* TABLE */
+.twrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:8px 14px;font-size:11px;font-weight:600;color:var(--g3);text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--g5);background:var(--g6);white-space:nowrap}
+td{padding:10px 14px;border-bottom:1px solid var(--g5);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--verde-pale)}
+.mono{font-family:'DM Mono',monospace;font-size:12px}
+
+/* CHIPS/BADGES */
+.chip{display:inline-flex;align-items:center;background:#FEF3DC;border:1px solid #F5C842;color:#7a4800;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:500;margin:2px}
+.chip-g{background:var(--g5);border-color:var(--g4);color:var(--g2)}
+.chip-y{background:var(--amarillo-pale);border-color:#e6d870;color:#7a6400}
+.bdg{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px}
+.bdg-si{background:var(--verde-pale);color:var(--verde)}
+.bdg-no{background:var(--g5);color:var(--g3)}
+
+/* SEARCH ADMIN */
+.sadmin{display:flex;gap:10px;margin-bottom:1rem;align-items:center}
+.sadmin input,.sadmin select{font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 12px;border:1px solid var(--g5);border-radius:var(--rsm);background:var(--blanco);color:var(--g1);outline:none;transition:border-color .15s}
+.sadmin input{flex:1;padding-left:36px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237A837E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:12px center}
+.sadmin input:focus,.sadmin select:focus{border-color:var(--verde);box-shadow:0 0 0 3px rgba(0,97,58,.07)}
+
+/* OBS ADMIN ITEM */
+.oai{border:1px solid var(--g5);border-radius:var(--rsm);margin-bottom:.75rem;overflow:hidden;transition:box-shadow .15s;background:var(--blanco)}
+.oai:hover{box-shadow:var(--sh-sm)}
+.oai-hd{padding:.875rem 1rem;background:var(--g6);border-bottom:1px solid var(--g5);display:flex;align-items:flex-start;gap:.75rem;justify-content:space-between}
+.oai-who{font-size:13px;font-weight:600}
+.oai-proc{font-size:11px;color:var(--g3);margin-top:2px;font-family:'DM Mono',monospace}
+.oai-date{font-size:11px;color:var(--g3);font-family:'DM Mono',monospace;white-space:nowrap}
+.oai-body{padding:.875rem 1rem}
+.oai-text{font-size:13px;color:var(--g2);line-height:1.6;margin-bottom:.75rem}
+.radmin{background:#FEF3DC;border-left:3px solid #E8890A;border-radius:0 var(--rsm) var(--rsm) 0;padding:.75rem 1rem}
+.radmin-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7a4800;margin-bottom:4px}
+.radmin-txt{font-size:13px;color:var(--g2);line-height:1.6}
+.oai-acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:.875rem}
+
+/* BAR */
+.brow{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.blbl{font-size:12px;color:var(--g1);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btrack{width:100px;height:6px;background:var(--g5);border-radius:3px;flex-shrink:0}
+.bfill{height:100%;border-radius:3px;background:var(--amarillo);transition:width .5s ease}
+.bnum{font-family:'DM Mono',monospace;font-size:12px;color:#333;font-weight:600;min-width:20px;text-align:right}
+
+/* FORM GRID */
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.full{grid-column:1/-1}
+
+/* CHART */
+.chwrap{position:relative;height:190px}
+
+/* EMPTY */
+.empty{text-align:center;padding:2.5rem 1rem;color:var(--g3)}
+.empty p{font-size:13px}
+
+/* PIN MODAL */
+.pino{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:900;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
+.pino.on{display:flex}
+.pinm{background:var(--blanco);border-radius:16px;padding:2.5rem 2rem;text-align:center;width:320px;box-shadow:var(--sh-lg);animation:popIn .25s ease}
+.pinlogo{width:48px;height:48px;background:var(--verde);border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem}
+.pintitle{font-size:16px;font-weight:600;margin-bottom:.35rem}
+.pinsub{font-size:13px;color:var(--g3);margin-bottom:1.5rem}
+.pindots{display:flex;gap:12px;justify-content:center;margin-bottom:1.25rem}
+.pindot{width:14px;height:14px;border-radius:50%;border:2px solid var(--g4);background:transparent;transition:all .2s}
+.pindot.f{background:var(--verde);border-color:var(--verde)}
+.pindot.e{background:var(--rojo);border-color:var(--rojo)}
+.pinpad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1rem}
+.pinkey{height:52px;border-radius:10px;border:1px solid var(--g5);background:var(--g6);font-family:'DM Mono',monospace;font-size:18px;font-weight:500;color:var(--g1);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.pinkey:hover{background:var(--verde-pale);border-color:var(--verde-mid);color:var(--verde)}
+.pinkey:active{transform:scale(.93)}
+.pinkey.del{font-size:13px;font-family:'DM Sans',sans-serif}
+.pinerr{font-size:12px;color:var(--rojo);min-height:18px;margin-bottom:.5rem}
+.pincanc{font-size:12px;color:var(--g3);background:none;border:none;cursor:pointer;padding:4px;font-family:'DM Sans',sans-serif}
+.pincanc:hover{color:var(--g1)}
+
+/* CONFIRM */
+.covo{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:800;display:none;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.covo.on{display:flex}
+.cmod{background:var(--blanco);border-radius:var(--r);padding:1.75rem 1.5rem;width:360px;box-shadow:var(--sh-lg);animation:popIn .2s ease}
+.cmod-t{font-size:15px;font-weight:600;margin-bottom:.5rem}
+.cmod-m{font-size:13px;color:var(--g3);margin-bottom:1.5rem;line-height:1.5}
+.cmod-a{display:flex;gap:10px;justify-content:flex-end}
+
+/* EDIT */
+.eovo{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:800;display:none;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.eovo.on{display:flex}
+.emod{background:var(--blanco);border-radius:var(--r);padding:1.75rem 1.5rem;width:500px;max-width:92vw;box-shadow:var(--sh-lg);animation:popIn .2s ease}
+.emod-t{font-size:15px;font-weight:600;margin-bottom:1.25rem}
+
+/* TOAST */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;padding:11px 18px;border-radius:var(--r);font-size:13px;font-weight:500;box-shadow:var(--sh-lg);transform:translateY(60px);opacity:0;transition:all .3s ease;z-index:999;display:flex;align-items:center;gap:8px}
+.toast.g{background:var(--verde);color:#fff}
+.toast.r{background:var(--rojo);color:#fff}
+.toast.on{transform:translateY(0);opacity:1}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.shake{animation:shake .3s ease}
+</style>
+</head>
+<body>
+
+<!-- LANDING -->
+<div class="screen on" id="s-land">
+  <div class="lcard">
+    <div class="llogo">
+      <svg viewBox="0 0 80 80" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="dg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#F5C842"/>
+            <stop offset="100%" style="stop-color:#E8890A"/>
+          </linearGradient>
+        </defs>
+        <rect x="10" y="10" width="60" height="60" rx="8" ry="8" transform="rotate(45 40 40)" fill="url(#dg)"/>
+        <rect x="14" y="14" width="52" height="52" rx="6" ry="6" transform="rotate(45 40 40)" fill="none" stroke="#111" stroke-width="1.5" opacity=".35"/>
+        <text x="40" y="46" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="800" font-size="18" fill="#111" letter-spacing="-1">IV</text>
+      </svg>
+    </div>
+    <div class="ltitle">INVIAS <span>Observaciones</span> a Procesos</div>
+    <div class="lsub">Seguimiento en la etapa de pliegos y prepliegos</div>
+    <button class="lbtn lbtn-p" onclick="showScreen('s-pub')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      Consultar observaciones por proceso
+    </button>
+    <button class="lbtn" style="background:rgba(245,196,0,.12);border-color:rgba(245,196,0,.35);color:#F5C400" onclick="abrirDashPub()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Ver estadísticas generales
+    </button>
+    <div class="ldiv"><span>o</span></div>
+    <button class="lbtn" onclick="showPin()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Acceso Administrador
+    </button>
+    <div style="font-size:11px;color:rgba(255,255,255,.25);margin-top:1.75rem;line-height:1.6">
+      Subdirección de Estructuración de Proyectos<br>
+      <span style="color:rgba(255,255,255,.15)">INVIAS · Instituto Nacional de Vías</span>
+    </div>
+  </div>
+</div>
+
+<!-- PÚBLICA -->
+<div class="screen" id="s-pub">
+  <header class="hdr">
+    <div class="hbrand">
+      <div class="hlogo"><svg viewBox="0 0 32 32" width="32" height="32" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#F5C842"/><stop offset="100%" style="stop-color:#E8890A"/></linearGradient></defs><rect x="3" y="3" width="26" height="26" rx="4" ry="4" transform="rotate(45 16 16)" fill="url(#hg)"/><text x="16" y="20" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="800" font-size="9" fill="#111">IV</text></svg></div>
+      <div><div class="htitle">INVIAS — Observaciones a Pliegos</div><div class="hsub">Consulta y registro público</div></div>
+    </div>
+    <button class="hback" onclick="showScreen('s-land')">← Inicio</button>
+  </header>
+  <div class="pbody">
+    <div class="scard">
+      <h2>Buscar proceso</h2>
+      <p>Escribe el número del proceso (código SECOP) o el nombre del proceso para consultar sus observaciones y enviar la tuya.</p>
+      <div class="srow">
+        <input class="sinput" id="pubQ" type="text" placeholder="Ej: SE-LP-001-2025 o Mantenimiento vial...">
+        <button class="sbtn" onclick="buscarPub()">Buscar</button>
+      </div>
+    </div>
+    <div id="pubRes"></div>
+  </div>
+</div>
+
+<!-- DASHBOARD PÚBLICO -->
+<div class="screen" id="s-dash-pub">
+  <header class="hdr">
+    <div class="hbrand">
+      <div class="hlogo"><svg viewBox="0 0 32 32" width="32" height="32" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#F5C842"/><stop offset="100%" style="stop-color:#E8890A"/></linearGradient></defs><rect x="3" y="3" width="26" height="26" rx="4" ry="4" transform="rotate(45 16 16)" fill="url(#hg)"/><text x="16" y="20" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="800" font-size="9" fill="#111">IV</text></svg></div>
+      <div><div class="htitle">INVIAS — Estadísticas de Observaciones</div><div class="hsub">Vista pública · Información general</div></div>
+    </div>
+    <button class="hback" onclick="showScreen('s-land')">← Inicio</button>
+  </header>
+  <div style="flex:1;padding:2rem;max-width:960px;margin:0 auto;width:100%;overflow-y:auto">
+    <div style="margin-bottom:1.5rem">
+      <div style="font-size:20px;font-weight:600;margin-bottom:.25rem">Resumen de observaciones</div>
+      <div style="font-size:13px;color:var(--g3)">Información actualizada sobre los procesos en etapa de pliegos y prepliegos</div>
+    </div>
+    <div class="kpi-pub" id="kpiPub" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem">
+      <div class="card"><div class="card-hd"><span class="card-t">Observaciones por etapa</span></div><div class="card-b" id="etapaPub"></div></div>
+      <div class="card"><div class="card-hd"><span class="card-t">Top observantes</span></div><div class="card-b" id="topObsPub"></div></div>
+    </div>
+    <div class="card"><div class="card-hd"><span class="card-t">Procesos más observados</span></div><div class="card-b" id="topProcPub"></div></div>
+    <div class="card"><div class="card-hd"><span class="card-t">Observaciones por proceso</span></div><div class="card-b"><div style="position:relative;height:220px"><canvas id="chartPub" role="img" aria-label="Observaciones por proceso"></canvas></div></div></div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="screen" id="s-admin">
+  <header class="hdr">
+    <div class="hbrand">
+      <div class="hlogo"><svg viewBox="0 0 32 32" width="32" height="32" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#F5C842"/><stop offset="100%" style="stop-color:#E8890A"/></linearGradient></defs><rect x="3" y="3" width="26" height="26" rx="4" ry="4" transform="rotate(45 16 16)" fill="url(#hg)"/><text x="16" y="20" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="800" font-size="9" fill="#111">IV</text></svg></div>
+      <div><div class="htitle">INVIAS — Panel Administrador</div><div class="hsub">Gestión completa de observaciones</div></div>
+    </div>
+    <button class="hback" onclick="showScreen('s-land')">Salir</button>
+  </header>
+  <div class="alayout">
+    <nav class="aside">
+      <div class="aside-top">
+        <div class="alogo-row"><div class="alogo"><svg viewBox="0 0 30 30" width="30" height="30" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ag" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#F5C842"/><stop offset="100%" style="stop-color:#E8890A"/></linearGradient></defs><rect x="3" y="3" width="24" height="24" rx="3" ry="3" transform="rotate(45 15 15)" fill="url(#ag)"/><text x="15" y="19" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="800" font-size="8" fill="#111">IV</text></svg></div><div><div class="aname">Administrador</div><div class="arole">Subdirección INVIAS</div></div></div>
+        <div class="abadge">🔒 Admin</div>
+      </div>
+      <div class="nslabel">Módulos</div>
+      <button class="nbtn on" onclick="goP('p-dash',this)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Dashboard
+      </button>
+      <button class="nbtn" onclick="goP('p-ing',this)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+        Ingresar observación
+      </button>
+      <button class="nbtn" onclick="goP('p-obs',this)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Observaciones <span class="nc" id="nc1">0</span>
+      </button>
+      <button class="nbtn" onclick="goP('p-mat',this)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Matriz procesos <span class="nc" id="nc2">0</span>
+      </button>
+      <button class="nbtn" onclick="goP('p-per',this)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Observantes <span class="nc" id="nc3">0</span>
+      </button>
+      <button class="nbtn" onclick="goP('p-log',this)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Log de actividad
+      </button>
+      <div class="aside-foot">
+        <button class="logoutbtn" onclick="showScreen('s-land')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Cerrar sesión
+        </button>
+      </div>
+    </nav>
+    <div class="amain">
+      <div class="atopbar">
+        <div><div class="atitle" id="ptitle">Dashboard</div><div class="asub" id="psub">Resumen general del sistema</div></div>
+      </div>
+      <div class="acontent">
+
+        <!-- DASHBOARD -->
+        <div class="panel on" id="p-dash">
+          <div class="krow" id="krow"></div>
+          <div class="card"><div class="card-hd"><span class="card-t">Observaciones por etapa</span></div><div class="card-b" id="detapa"></div></div>
+          <div class="two">
+            <div class="card"><div class="card-hd"><span class="card-t">Top observantes</span></div><div class="card-b" id="dtopO"></div></div>
+            <div class="card"><div class="card-hd"><span class="card-t">Procesos más observados</span></div><div class="card-b" id="dtopP"></div></div>
+          </div>
+          <div class="card"><div class="card-hd"><span class="card-t">Observaciones por proceso</span></div><div class="card-b"><div class="chwrap"><canvas id="dchart" role="img" aria-label="Observaciones por proceso"></canvas></div></div></div>
+        </div>
+
+        <!-- INGRESAR -->
+        <div class="panel" id="p-ing">
+          <div class="card"><div class="card-hd"><span class="card-t">Nueva observación</span></div>
+          <div class="card-b">
+            <div class="fg2">
+              <div class="field"><label>Código SECOP *</label><input type="text" id="iCod" placeholder="SE-LP-001-2025"><span class="emsg" id="eiCod">Obligatorio</span></div>
+              <div class="field"><label>Nickname del proceso *</label><input type="text" id="iNick" placeholder="Nombre corto del proceso"><span class="emsg" id="eiNick">Obligatorio</span></div>
+              <div class="field"><label>Etapa *</label><select id="iEtapa" style="width:100%;font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;border:1px solid var(--g5);border-radius:var(--rsm);background:var(--g6);color:var(--g1);outline:none;transition:border-color .15s"><option value="Pliegos">Pliegos</option><option value="Prepliegos">Prepliegos</option></select></div>
+              <div class="field"><label>Observante *</label><input type="text" id="iObs" placeholder="Nombre o razón social"><span class="emsg" id="eiObs">Obligatorio</span></div>
+              <div class="field full"><label>Observación *</label><textarea id="iText" placeholder="Texto de la observación..."></textarea><span class="emsg" id="eiText">Obligatorio</span></div>
+              <div class="field full"><label>Respuesta INVIAS (opcional)</label><textarea id="iResp" placeholder="Respuesta del INVIAS..."></textarea></div>
+            </div>
+            <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:1rem">
+              <button class="btn" onclick="limpI()">Limpiar</button>
+              <button class="btn btn-green" onclick="guardarI()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Guardar
+              </button>
+            </div>
+          </div></div>
+        </div>
+
+        <!-- OBSERVACIONES -->
+        <div class="panel" id="p-obs">
+          <div class="sadmin">
+            <input type="text" id="fObs" placeholder="Buscar por código, proceso u observante..." oninput="renderObs()">
+            <select id="fResp" onchange="renderObs()">
+              <option value="">Todas</option><option value="si">Con respuesta</option><option value="no">Sin respuesta</option>
+            </select>
+          </div>
+          <div id="listaObs"></div>
+        </div>
+
+        <!-- MATRIZ -->
+        <div class="panel" id="p-mat">
+          <div class="sadmin">
+            <input type="text" id="fMat" placeholder="Buscar proceso..." oninput="renderMat()">
+            <button class="btn btn-green btn-sm" onclick="exportarExcel()" style="white-space:nowrap">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Exportar Excel
+            </button>
+          </div>
+          <div class="card" style="padding:0"><div class="twrap"><table>
+            <thead><tr><th>Código SECOP</th><th>Nickname</th><th>Observantes</th><th style="text-align:center">Obs.</th><th style="text-align:center">Respondidas</th><th>Más activo</th></tr></thead>
+            <tbody id="bMat"></tbody>
+          </table></div></div>
+        </div>
+
+        <!-- LOG -->
+        <div class="panel" id="p-log">
+          <div class="card" style="padding:0"><div class="twrap"><table>
+            <thead><tr><th>Fecha</th><th>Usuario</th><th>Acción</th><th>Detalle</th></tr></thead>
+            <tbody id="bLog"></tbody>
+          </table></div></div>
+        </div>
+
+        <!-- OBSERVANTES -->
+        <div class="panel" id="p-per">
+          <div class="card" style="padding:0"><div class="twrap"><table>
+            <thead><tr><th>#</th><th>Observante</th><th style="text-align:center">Total obs.</th><th>Procesos</th></tr></thead>
+            <tbody id="bPer"></tbody>
+          </table></div></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div class="pino" id="pino">
+  <div class="pinm" id="pinm" style="width:360px">
+    <div class="pinlogo" style="background:#111;width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem"><svg viewBox="0 0 40 40" width="40" height="40" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="pg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#F5C842"/><stop offset="100%" style="stop-color:#E8890A"/></linearGradient></defs><rect x="4" y="4" width="32" height="32" rx="5" ry="5" transform="rotate(45 20 20)" fill="url(#pg)"/><text x="20" y="25" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="800" font-size="11" fill="#111">IV</text></svg></div>
+    <div class="pintitle">Acceso Administrador</div>
+    <div class="pinsub">Ingresa tus credenciales</div>
+    <div style="text-align:left;margin-bottom:1rem">
+      <div style="margin-bottom:.75rem">
+        <label style="font-size:12px;font-weight:500;color:var(--g2);display:block;margin-bottom:4px">Usuario</label>
+        <input id="loginUser" type="text" placeholder="usuario" autocomplete="off"
+          style="width:100%;font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;border:1px solid var(--g5);border-radius:var(--rsm);background:var(--g6);color:var(--g1);outline:none;transition:border-color .15s"
+          onfocus="this.style.borderColor='#F5A800'" onblur="this.style.borderColor='var(--g5)'"
+          onkeydown="if(event.key==='Enter')document.getElementById('loginPass').focus()">
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:500;color:var(--g2);display:block;margin-bottom:4px">Contraseña</label>
+        <div style="position:relative">
+          <input id="loginPass" type="password" placeholder="••••••••" autocomplete="off"
+            style="width:100%;font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 36px 9px 12px;border:1px solid var(--g5);border-radius:var(--rsm);background:var(--g6);color:var(--g1);outline:none;transition:border-color .15s"
+            onfocus="this.style.borderColor='#F5A800'" onblur="this.style.borderColor='var(--g5)'"
+            onkeydown="if(event.key==='Enter')chkLogin()">
+          <button onclick="togglePass()" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--g3);padding:2px">
+            <svg id="eyeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="pinerr" id="perr"></div>
+    <button onclick="chkLogin()" style="width:100%;background:var(--verde);color:#fff;border:none;border-radius:var(--rsm);padding:10px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;margin-bottom:.75rem;transition:background .15s" onmouseover="this.style.background='var(--verde-h)'" onmouseout="this.style.background='var(--verde)'">Ingresar</button>
+    <button class="pincanc" onclick="cerrarPin()">Cancelar</button>
+  </div>
+</div>
+
+<!-- CONFIRM -->
+<div class="covo" id="covo">
+  <div class="cmod">
+    <div class="cmod-t" id="ctitle">¿Eliminar?</div>
+    <div class="cmod-m" id="cmsg">Esta acción no se puede deshacer.</div>
+    <div class="cmod-a">
+      <button class="btn" onclick="cerrarC()">Cancelar</button>
+      <button class="btn" style="background:var(--rojo);color:#fff;border-color:var(--rojo)" id="cbtn">Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT -->
+<div class="eovo" id="eovo">
+  <div class="emod">
+    <div class="emod-t" id="etitle">Editar</div>
+    <div class="field"><label id="elbl">Valor</label><textarea id="einput" rows="4"></textarea></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:1rem">
+      <button class="btn" onclick="cerrarE()">Cancelar</button>
+      <button class="btn btn-green" onclick="guardarE()">Guardar cambios</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast g" id="toast"><span id="tmsg"></span></div>
+
+<!-- LOADING -->
+<div id="loadingBar" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(4px)">
+  <div style="background:#fff;border-radius:12px;padding:2rem 2.5rem;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.2)">
+    <div style="width:40px;height:40px;border:3px solid #E5E5E5;border-top-color:#F5A800;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1rem"></div>
+    <div style="font-size:13px;font-weight:500;color:#333">Conectando con SharePoint...</div>
+    <div style="font-size:11px;color:#777;margin-top:4px">Asegúrate de estar autenticado con tu cuenta INVIAS</div>
+  </div>
+</div>
+<div id="errorMsg" style="display:none;position:fixed;bottom:5rem;left:50%;transform:translateX(-50%);background:#B83030;color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:500;box-shadow:0 4px 20px rgba(0,0,0,.2);z-index:999;max-width:400px;text-align:center"></div>
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+// ─── USUARIOS ─────────────────────────
+// Agrega o modifica usuarios aquí:
+const USUARIOS = [
+  { usuario: 'admin',    clave: 'invias2025' },
+  { usuario: 'subdirec', clave: 'sep2025'    },
+];
+
+// ─── ESTADO ───────────────────────────
+let DATA=[];
+let chartI=null;
+let cbCon=null,cbEdit=null;
+
+// ── SHAREPOINT CONFIG ──────────────────
+const SP_SITE  = "https://invias-my.sharepoint.com/personal/cdmolinan_invias_gov_co";
+const SP_LIST  = "Observaciones Procesos SEP 2026";
+const SP_API   = SP_SITE + "/_api/web/lists/getbytitle('" + encodeURIComponent(SP_LIST) + "')/items";
+const SP_HDR   = { "Accept":"application/json;odata=verbose", "Content-Type":"application/json;odata=verbose" };
+
+let LOG = [];
+let SP_DIGEST = '';
+
+// Obtener request digest para operaciones POST/PATCH/DELETE
+async function getDigest(){
+  try{
+    const r = await fetch(SP_SITE + "/_api/contextinfo", {
+      method:"POST", credentials:"include",
+      headers:{"Accept":"application/json;odata=verbose","Content-Type":"application/json;odata=verbose"}
+    });
+    const d = await r.json();
+    SP_DIGEST = d.d.GetContextWebInformation.FormDigestValue;
+  } catch(e){ console.error("Digest error",e); }
+}
+
+// Mapear item SharePoint → objeto interno
+function spToObj(item){
+  return {
+    id: item.Id,
+    spId: item.Id,
+    codigo: item.Codigo||'',
+    nick: item.Nick||'',
+    etapa: item.Etapa||'Pliegos',
+    observante: item.Observante||'',
+    observacion: item.Observacion||'',
+    respuesta: item.Respuesta||'',
+    fecha: item.CreadoEn||'',
+    _creadoPor: item.CreadoPor||'',
+    _creadoEn: item.CreadoEn||'',
+    _respondidoPor: item.RespondidoPor||'',
+    _respondidoEn: item.RespondidoEn||'',
+    _ediciones: item.Ediciones ? JSON.parse(item.Ediciones) : []
+  };
+}
+
+// Cargar datos desde SharePoint
+async function load(){
+  mostrarCargando(true);
+  try{
+    const r = await fetch(SP_API + "?$select=Id,Codigo,Nick,Etapa,Observante,Observacion,Respuesta,CreadoPor,CreadoEn,RespondidoPor,RespondidoEn,Ediciones&$orderby=Id desc&$top=500",
+      { credentials:"include", headers:{"Accept":"application/json;odata=verbose"} });
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    const d = await r.json();
+    DATA = d.d.results.map(spToObj);
+  } catch(e){
+    console.error("Error cargando datos:",e);
+    mostrarError("No se pudo conectar con SharePoint. Verifica que estés autenticado con tu cuenta INVIAS.");
+  }
+  mostrarCargando(false);
+}
+
+// Guardar nueva observación en SharePoint
+async function save(obj){
+  await getDigest();
+  const body = JSON.stringify({
+    __metadata:{type:"SP.Data.Observaciones_x0020_Procesos_x0020_SEP_x0020_2026ListItem"},
+    Codigo: obj.codigo,
+    Nick: obj.nick,
+    Etapa: obj.etapa,
+    Observante: obj.observante,
+    Observacion: obj.observacion,
+    Respuesta: obj.respuesta||'',
+    CreadoPor: obj._creadoPor||'',
+    CreadoEn: obj._creadoEn||obj.fecha||'',
+    RespondidoPor: '',
+    RespondidoEn: '',
+    Ediciones: '[]'
+  });
+  const r = await fetch(SP_API, {
+    method:"POST", credentials:"include",
+    headers:{ ...SP_HDR, "X-RequestDigest": SP_DIGEST },
+    body
+  });
+  if(!r.ok) throw new Error("Error guardando: "+r.status);
+  const d = await r.json();
+  return d.d.Id;
+}
+
+// Actualizar item en SharePoint
+async function update(spId, campos){
+  await getDigest();
+  const body = JSON.stringify({
+    __metadata:{type:"SP.Data.Observaciones_x0020_Procesos_x0020_SEP_x0020_2026ListItem"},
+    ...campos
+  });
+  await fetch(SP_API + "(" + spId + ")", {
+    method:"POST", credentials:"include",
+    headers:{ ...SP_HDR, "X-RequestDigest": SP_DIGEST,
+      "X-HTTP-Method":"MERGE","If-Match":"*" },
+    body
+  });
+}
+
+// Eliminar item en SharePoint
+async function deleteItem(spId){
+  await getDigest();
+  await fetch(SP_API + "(" + spId + ")", {
+    method:"POST", credentials:"include",
+    headers:{ ...SP_HDR, "X-RequestDigest": SP_DIGEST,
+      "X-HTTP-Method":"DELETE","If-Match":"*" }
+  });
+}
+
+function saveLog(){ try{localStorage.setItem('invias_log',JSON.stringify(LOG));}catch(e){} }
+function loadLog(){ try{const d=localStorage.getItem('invias_log');if(d)LOG=JSON.parse(d);}catch(e){} }
+
+// UI helpers
+function mostrarCargando(on){
+  let el=document.getElementById('loadingBar');
+  if(!el)return;
+  el.style.display=on?'flex':'none';
+}
+function mostrarError(msg){
+  let el=document.getElementById('errorMsg');
+  if(el){ el.textContent=msg; el.style.display=msg?'block':'none'; }
+}
+
+// ─── SCREENS ──────────────────────────
+async function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  if(id==='s-pub'||id==='s-admin'){
+    await load();
+    badges();
+  }
+}
+
+// ─── LOGIN ────────────────────────────
+function showPin(){
+  document.getElementById('loginUser').value='';
+  document.getElementById('loginPass').value='';
+  document.getElementById('perr').textContent='';
+  document.getElementById('pino').classList.add('on');
+  setTimeout(()=>document.getElementById('loginUser').focus(),100);
+}
+function cerrarPin(){document.getElementById('pino').classList.remove('on');}
+function togglePass(){
+  const p=document.getElementById('loginPass');
+  p.type=p.type==='password'?'text':'password';
+}
+let USUARIO_ACTIVO = '';
+
+function chkLogin(){
+  const u=document.getElementById('loginUser').value.trim().toLowerCase();
+  const c=document.getElementById('loginPass').value;
+  const match=USUARIOS.find(x=>x.usuario.toLowerCase()===u && x.clave===c);
+  if(match){
+    USUARIO_ACTIVO = match.usuario;
+    cerrarPin();badges();renderDash();showScreen('s-admin');goP('p-dash',document.querySelector('.nbtn'));
+  } else {
+    document.getElementById('perr').textContent='Usuario o contraseña incorrectos.';
+    document.getElementById('pinm').classList.add('shake');
+    setTimeout(()=>document.getElementById('pinm').classList.remove('shake'),600);
+  }
+}
+
+// ─── ADMIN NAV ────────────────────────
+const PTITLES={'p-dash':['Dashboard','Resumen general del sistema'],'p-ing':['Ingresar observación','Registra una nueva observación al proceso'],'p-obs':['Observaciones','Gestiona, edita, responde y elimina observaciones'],'p-mat':['Matriz de procesos','Vista agrupada por proceso con observantes'],'p-per':['Observantes','Ranking de observantes registrados'],'p-log':['Log de actividad','Registro de eliminaciones realizadas por cada usuario']};
+function goP(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  if(btn)btn.classList.add('on');
+  const t=PTITLES[id]||['',''];
+  document.getElementById('ptitle').textContent=t[0];
+  document.getElementById('psub').textContent=t[1];
+  if(id==='p-dash')renderDash();
+  if(id==='p-obs')renderObs();
+  if(id==='p-mat')renderMat();
+  if(id==='p-per')renderPer();
+  if(id==='p-log')renderLog();
+}
+
+// ─── HELPERS ──────────────────────────
+function v(id){return (document.getElementById(id)||{}).value?.trim()||'';}
+function agrupar(){const m={};DATA.forEach(r=>{if(!m[r.codigo])m[r.codigo]={codigo:r.codigo,nick:r.nick,obs:[]};m[r.codigo].obs.push(r);});return Object.values(m);}
+function rankObs(){const m={};DATA.forEach(r=>{if(!m[r.observante])m[r.observante]={count:0,procs:new Set()};m[r.observante].count++;m[r.observante].procs.add(r.codigo);});return m;}
+function topObs(obs){const c={};obs.forEach(o=>{c[o.observante]=(c[o.observante]||0)+1;});const t=Object.entries(c).sort((a,b)=>b[1]-a[1])[0];return t||['—',0];}
+function fdate(){return new Date().toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'});}
+function badges(){
+  const g=agrupar();const rm=rankObs();
+  document.getElementById('nc1').textContent=DATA.length;
+  document.getElementById('nc2').textContent=g.length;
+  document.getElementById('nc3').textContent=Object.keys(rm).length;
+}
+
+// ─── TOAST ────────────────────────────
+function toast(msg,tipo='g'){
+  const t=document.getElementById('toast');
+  t.className='toast '+tipo+' on';
+  document.getElementById('tmsg').textContent=msg;
+  setTimeout(()=>t.classList.remove('on'),3200);
+}
+
+// ─── CONFIRM ──────────────────────────
+function confirm2(tit,msg,cb){document.getElementById('ctitle').textContent=tit;document.getElementById('cmsg').textContent=msg;cbCon=cb;document.getElementById('covo').classList.add('on');}
+function cerrarC(){document.getElementById('covo').classList.remove('on');cbCon=null;}
+document.getElementById('cbtn').onclick=function(){if(cbCon)cbCon();cerrarC();};
+
+// ─── EDIT MODAL ───────────────────────
+function openE(tit,lbl,val,cb){document.getElementById('etitle').textContent=tit;document.getElementById('elbl').textContent=lbl;document.getElementById('einput').value=val;cbEdit=cb;document.getElementById('eovo').classList.add('on');}
+function cerrarE(){document.getElementById('eovo').classList.remove('on');cbEdit=null;}
+function guardarE(){if(cbEdit)cbEdit(document.getElementById('einput').value.trim());cerrarE();}
+
+// ─── ADMIN INGRESAR ───────────────────
+function setE(f,s){document.getElementById('ei'+f)?.classList[s?'add':'remove']('on');}
+function limpI(){['Cod','Nick','Obs','Text','Resp'].forEach(f=>{const el=document.getElementById('i'+f);if(el)el.value='';setE(f,false);});const es=document.getElementById('iEtapa');if(es)es.value='Pliegos';}
+async function guardarI(){
+  const c=v('iCod'),n=v('iNick'),o=v('iObs'),t=v('iText');
+  const etapa=document.getElementById('iEtapa')?.value||'Pliegos';
+  let ok=true;
+  [['Cod',c],['Nick',n],['Obs',o],['Text',t]].forEach(([f,val])=>{if(!val){setE(f,true);ok=false;}else setE(f,false);});
+  if(!ok)return;
+  const nuevaObs={codigo:c,nick:n,etapa,observante:o,observacion:t,respuesta:v('iResp'),fecha:fdate(),_creadoPor:USUARIO_ACTIVO,_creadoEn:fdate()};
+  try{
+    toast('Guardando...','g');
+    const spId=await save(nuevaObs);
+    nuevaObs.id=spId; nuevaObs.spId=spId;
+    DATA.unshift(nuevaObs);
+    LOG.push({accion:'Ingresó observación',detalle:`${o} en proceso ${c} (${n})`,usuario:USUARIO_ACTIVO,fecha:fdate()});
+    saveLog();limpI();badges();toast('Observación guardada');
+    if(document.getElementById('p-obs').classList.contains('on'))renderObs();
+  } catch(e){ toast('Error al guardar en SharePoint','r'); console.error(e); }
+}
+
+// ─── ADMIN OBSERVACIONES ──────────────
+function renderObs(){
+  const txt=v('fObs').toLowerCase();
+  const rf=v('fResp');
+  let rows=DATA.filter(r=>{
+    const mt=!txt||r.codigo.toLowerCase().includes(txt)||r.nick.toLowerCase().includes(txt)||r.observante.toLowerCase().includes(txt)||r.observacion.toLowerCase().includes(txt);
+    const mr=!rf||(rf==='si'?!!r.respuesta:!r.respuesta);
+    return mt&&mr;
+  });
+  const el=document.getElementById('listaObs');
+  if(!rows.length){el.innerHTML=`<div class="empty"><p>${DATA.length?'Sin resultados para ese filtro.':'Sin observaciones aún.'}</p></div>`;return;}
+  el.innerHTML=rows.map(r=>{
+    const ri=DATA.findIndex(x=>x.id===r.id);
+    return `<div class="oai">
+      <div class="oai-hd">
+        <div><div class="oai-who">${r.observante}</div><div class="oai-proc">${r.codigo} · ${r.nick}</div></div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end">
+          <span style="display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:600;${(r.etapa||'Pliegos')==='Prepliegos'?'background:#FEF9E0;color:#7a6400;border:1px solid #e6d870':'background:#EAF4EF;color:#00613A;border:1px solid #B8DECA'}">${r.etapa||'Pliegos'}</span>
+          <span class="bdg ${r.respuesta?'bdg-si':'bdg-no'}">${r.respuesta?'✓ Respondida':'Pendiente'}</span>
+          <span class="oai-date">${r.fecha}</span>
+        </div>
+      </div>
+      <div class="oai-body">
+        <div class="oai-text">${r.observacion}</div>
+        ${r.respuesta?`<div class="radmin"><div class="radmin-lbl">Respuesta INVIAS</div><div class="radmin-txt">${r.respuesta}</div></div>`:`<span class="bdg bdg-no">Sin respuesta aún</span>`}
+        <div style="margin-top:.75rem;padding:.6rem .75rem;background:var(--g6);border-radius:var(--rsm);font-size:11px;color:var(--g3);display:flex;flex-wrap:wrap;gap:10px">
+          ${r._creadoPor?`<span>✏️ Ingresado por <strong style="color:var(--g2)">${r._creadoPor}</strong> el ${r._creadoEn||r.fecha}</span>`:''}
+          ${r._respondidoPor?`<span>💬 Respondido por <strong style="color:var(--g2)">${r._respondidoPor}</strong> el ${r._respondidoEn}</span>`:''}
+          ${r._ediciones&&r._ediciones.length?`<span>🖊 Última edición: <strong style="color:var(--g2)">${r._ediciones[r._ediciones.length-1].por}</strong> (${r._ediciones[r._ediciones.length-1].campo}) el ${r._ediciones[r._ediciones.length-1].en}</span>`:''}
+        </div>
+        <div class="oai-acts">
+          <button class="btn btn-sm btn-blue" onclick="responder(${ri})">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            ${r.respuesta?'Editar respuesta':'Responder'}
+          </button>
+          <button class="btn btn-sm" onclick="editC(${ri},'observante','Observante',\`${r.observante.replace(/`/g,"'")}\`)">Editar observante</button>
+          <button class="btn btn-sm" onclick="editC(${ri},'observacion','Observación',\`${r.observacion.replace(/`/g,"'")}\`)">Editar observación</button>
+          <button class="btn btn-sm" onclick="editC(${ri},'codigo','Código SECOP',\`${r.codigo}\`)">Editar código</button>
+          <button class="btn btn-sm" onclick="editC(${ri},'nick','Nickname',\`${r.nick.replace(/`/g,"'")}\`)">Editar nickname</button>
+          <button class="btn btn-sm btn-red" onclick="eliminar(${ri})">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function responder(i){openE('Respuesta INVIAS','Escribe la respuesta',DATA[i].respuesta||'',async val=>{if(!val){toast('Escribe una respuesta','r');return;}
+  try{
+    await update(DATA[i].spId,{Respuesta:val,RespondidoPor:USUARIO_ACTIVO,RespondidoEn:fdate()});
+    DATA[i].respuesta=val;DATA[i]._respondidoPor=USUARIO_ACTIVO;DATA[i]._respondidoEn=fdate();
+    LOG.push({accion:'Respondió observación',detalle:`Observante: ${DATA[i].observante} (${DATA[i].codigo})`,usuario:USUARIO_ACTIVO,fecha:fdate()});
+    saveLog();renderObs();badges();toast('Respuesta guardada');
+  } catch(e){toast('Error al guardar respuesta','r');console.error(e);}
+});}
+function editC(i,campo,label,actual){openE('Editar '+label,label,actual,async val=>{if(!val){toast('El campo no puede quedar vacío','r');return;}
+  try{
+    const spCampo={observante:'Observante',observacion:'Observacion',codigo:'Codigo',nick:'Nick'}[campo]||campo;
+    const patch={};patch[spCampo]=val;
+    if(!DATA[i]._ediciones)DATA[i]._ediciones=[];
+    DATA[i]._ediciones.push({campo,por:USUARIO_ACTIVO,en:fdate()});
+    patch.Ediciones=JSON.stringify(DATA[i]._ediciones);
+    await update(DATA[i].spId,patch);
+    DATA[i][campo]=val;
+    LOG.push({accion:'Editó campo',detalle:`Campo "${campo}" en observación de ${DATA[i].observante} (${DATA[i].codigo})`,usuario:USUARIO_ACTIVO,fecha:fdate()});
+    saveLog();renderObs();renderMat();badges();toast(label+' actualizado');
+  } catch(e){toast('Error al editar','r');console.error(e);}
+});}
+function eliminar(i){
+  const r=DATA[i];
+  confirm2('Eliminar observación','Esta acción eliminará la observación permanentemente.',async()=>{
+    try{
+      await deleteItem(r.spId);
+      LOG.push({accion:'Eliminó observación',detalle:`"${r.observacion.slice(0,50)}..." de ${r.observante} (${r.codigo})`,usuario:USUARIO_ACTIVO,fecha:fdate()});
+      saveLog();DATA.splice(i,1);badges();renderObs();toast('Eliminado');
+    } catch(e){toast('Error al eliminar','r');console.error(e);}
+  });
+}
+
+// ─── ADMIN MATRIZ ─────────────────────
+function renderMat(){
+  const txt=v('fMat').toLowerCase();
+  let g=agrupar();
+  if(txt)g=g.filter(x=>x.codigo.toLowerCase().includes(txt)||x.nick.toLowerCase().includes(txt)||x.obs.some(o=>o.observante.toLowerCase().includes(txt)));
+  const b=document.getElementById('bMat');
+  if(!g.length){b.innerHTML=`<tr><td colspan="6"><div class="empty"><p>Sin procesos aún.</p></div></td></tr>`;return;}
+  g.sort((a,b2)=>b2.obs.length-a.obs.length);
+  b.innerHTML=g.map(x=>{
+    const u=[...new Set(x.obs.map(o=>o.observante))];
+    const t=topObs(x.obs);
+    const resp=x.obs.filter(o=>o.respuesta).length;
+    return `<tr>
+      <td class="mono">${x.codigo}</td>
+      <td style="font-weight:500">${x.nick}</td>
+      <td>${u.slice(0,3).map(n=>`<span class="chip">${n}</span>`).join('')}${u.length>3?`<span class="chip chip-g">+${u.length-3}</span>`:''}</td>
+      <td style="text-align:center;font-family:'DM Mono',monospace;font-weight:600;color:var(--verde)">${x.obs.length}</td>
+      <td style="text-align:center"><span class="chip ${resp===x.obs.length?'':'chip-y'}">${resp}/${x.obs.length}</span></td>
+      <td style="font-size:12px">${t[0]} <span style="color:var(--g3)">(${t[1]})</span></td>
+    </tr>`;
+  }).join('');
+}
+
+// ─── ADMIN OBSERVANTES ────────────────
+function renderPer(){
+  const rm=rankObs();const s=Object.entries(rm).sort((a,b)=>b[1].count-a[1].count);
+  const b=document.getElementById('bPer');
+  if(!s.length){b.innerHTML=`<tr><td colspan="4"><div class="empty"><p>Sin observantes aún.</p></div></td></tr>`;return;}
+  b.innerHTML=s.map(([n,v2],i)=>`<tr>
+    <td class="mono" style="color:var(--g3)">${String(i+1).padStart(2,'0')}</td>
+    <td style="font-weight:500">${n}</td>
+    <td style="text-align:center;font-family:'DM Mono',monospace;font-weight:600;color:var(--verde)">${v2.count}</td>
+    <td>${[...v2.procs].map(p=>`<span class="chip chip-g">${p}</span>`).join('')}</td>
+  </tr>`).join('');
+}
+
+// ─── ADMIN DASHBOARD ──────────────────
+function renderDash(){
+  const g=agrupar();const rm=rankObs();
+  const total=DATA.length;const sinR=DATA.filter(r=>!r.respuesta).length;
+  const nPliegos=DATA.filter(r=>(r.etapa||'Pliegos')==='Pliegos').length;
+  const nPrepliegos=DATA.filter(r=>r.etapa==='Prepliegos').length;
+  const topO=Object.entries(rm).sort((a,b)=>b[1].count-a[1].count)[0];
+  document.getElementById('krow').innerHTML=`
+    <div class="kbox vd"><div class="klbl">Total observaciones</div><div class="kval">${total}</div></div>
+    <div class="kbox am"><div class="klbl">Procesos</div><div class="kval">${g.length}</div></div>
+    <div class="kbox az"><div class="klbl">Observantes únicos</div><div class="kval">${Object.keys(rm).length}</div></div>
+    <div class="kbox rd"><div class="klbl">Sin respuesta</div><div class="kval">${sinR}</div><div class="ksub">${total-sinR} respondidas</div></div>`;
+  // Etapa summary card
+  document.getElementById('detapa').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+      <div style="background:var(--verde-pale);border:1px solid var(--verde-mid);border-radius:var(--rsm);padding:1rem 1.25rem">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--verde);margin-bottom:6px">Pliegos</div>
+        <div style="font-size:28px;font-weight:600;font-family:'DM Mono',monospace;color:var(--verde)">${nPliegos}</div>
+        <div style="font-size:11px;color:var(--g3);margin-top:3px">${total?Math.round(nPliegos/total*100):0}% del total</div>
+      </div>
+      <div style="background:#FEF9E0;border:1px solid #e6d870;border-radius:var(--rsm);padding:1rem 1.25rem">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:#7a6400;margin-bottom:6px">Prepliegos</div>
+        <div style="font-size:28px;font-weight:600;font-family:'DM Mono',monospace;color:#7a6400">${nPrepliegos}</div>
+        <div style="font-size:11px;color:var(--g3);margin-top:3px">${total?Math.round(nPrepliegos/total*100):0}% del total</div>
+      </div>
+    </div>`;
+  const sO=Object.entries(rm).sort((a,b)=>b[1].count-a[1].count).slice(0,6);
+  const mO=sO[0]?sO[0][1].count:1;
+  document.getElementById('dtopO').innerHTML=sO.length?sO.map(([n,v2],i)=>`<div class="brow"><span style="font-size:11px;color:var(--g3);min-width:18px;font-family:'DM Mono',monospace">${i+1}</span><span class="blbl">${n}</span><div class="btrack"><div class="bfill" style="width:${Math.round(v2.count/mO*100)}%"></div></div><span class="bnum">${v2.count}</span></div>`).join(''):`<div class="empty" style="padding:1rem 0"><p>Sin datos</p></div>`;
+  const sP=g.sort((a,b2)=>b2.obs.length-a.obs.length).slice(0,6);
+  const mP=sP[0]?sP[0].obs.length:1;
+  document.getElementById('dtopP').innerHTML=sP.length?sP.map((x,i)=>`<div class="brow"><span style="font-size:11px;color:var(--g3);min-width:18px;font-family:'DM Mono',monospace">${i+1}</span><div style="flex:1;min-width:0"><div class="blbl">${x.nick}</div><div style="font-size:10px;color:var(--g3);font-family:'DM Mono',monospace">${x.codigo}</div></div><div class="btrack"><div class="bfill" style="width:${Math.round(x.obs.length/mP*100)}%"></div></div><span class="bnum">${x.obs.length}</span></div>`).join(''):`<div class="empty" style="padding:1rem 0"><p>Sin datos</p></div>`;
+  if(chartI)chartI.destroy();
+  if(!sP.length)return;
+  chartI=new Chart(document.getElementById('dchart'),{type:'bar',data:{labels:sP.map(x=>x.nick.length>16?x.nick.slice(0,15)+'…':x.nick),datasets:[{label:'Obs.',data:sP.map(x=>x.obs.length),backgroundColor:'rgba(245,168,0,.2)',borderColor:'#E8890A',borderWidth:2,borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1,font:{size:11},color:'#7A837E'},grid:{color:'rgba(0,0,0,.04)'}},x:{ticks:{font:{size:11},color:'#3D4440'},grid:{display:false}}}}});
+}
+
+// ─── PÚBLICA — BUSCAR ─────────────────
+async function buscarPub(){
+  await load();
+  const q=(document.getElementById('pubQ').value||'').trim().toLowerCase();
+  const el=document.getElementById('pubRes');
+  if(!q){el.innerHTML=`<div style="color:var(--g3);font-size:13px;text-align:center;padding:1.5rem">Ingresa un código o nombre de proceso para buscar.</div>`;return;}
+  const grupos=agrupar().filter(g=>g.codigo.toLowerCase().includes(q)||g.nick.toLowerCase().includes(q));
+  if(!grupos.length){
+    el.innerHTML=`<div class="pcard" style="padding:2rem;text-align:center"><div style="font-size:13px;color:var(--g3)">No se encontró ningún proceso con ese código o nombre.</div><div style="font-size:12px;color:var(--g4);margin-top:.5rem">Verifica e intenta de nuevo.</div></div>`;return;
+  }
+  el.innerHTML=grupos.map(g=>renderProcPub(g)).join('');
+}
+
+function safeKey(cod){return cod.replace(/[^a-z0-9]/gi,'_');}
+
+function renderProcPub(g){
+  const resp=g.obs.filter(o=>o.respuesta).length;
+  const sk=safeKey(g.codigo);
+  const obsH=g.obs.length?g.obs.map(r=>`<div class="oitem">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px"><span class="owho">${r.observante}</span><span class="odate">${r.fecha}</span></div>
+    <div class="otext">${r.observacion}</div>
+    ${r.respuesta?`<div class="rbox"><div class="rlabel">Respuesta INVIAS</div><div class="rtext">${r.respuesta}</div></div>`:`<span class="rpend"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Pendiente de respuesta</span>`}
+  </div>`).join(''):`<div style="padding:1.25rem;text-align:center;color:var(--g3);font-size:13px">Aún no hay observaciones para este proceso.</div>`;
+  return `<div class="pcard">
+    <div class="pcard-hd">
+      <div><div class="pcodigo">${g.codigo}</div><div class="pnick">${g.nick}</div><div style="font-size:11px;color:var(--g3);margin-top:4px">${resp} de ${g.obs.length} observaciones respondidas</div></div>
+      <span class="pbadge">${g.obs.length} obs.</span>
+    </div>
+    <div class="olist">${obsH}</div>
+  </div>`;
+}
+
+
+// Enter en buscador
+document.getElementById('pubQ').addEventListener('keydown',e=>{if(e.key==='Enter')buscarPub();});
+
+// ─── LOG ──────────────────────────────
+function renderLog(){
+  const b=document.getElementById('bLog');
+  const sorted=[...LOG].reverse();
+  if(!sorted.length){b.innerHTML=`<tr><td colspan="4"><div class="empty"><p>Sin registros de actividad aún.</p></div></td></tr>`;return;}
+  b.innerHTML=sorted.map(l=>`<tr>
+    <td class="mono" style="white-space:nowrap">${l.fecha}</td>
+    <td><span style="display:inline-flex;align-items:center;background:var(--verde-pale);border:1px solid var(--verde-mid);color:var(--verde);border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600">${l.usuario}</span></td>
+    <td style="font-size:13px;font-weight:500">${l.accion}</td>
+    <td style="font-size:12px;color:var(--g2)">${l.detalle}</td>
+  </tr>`).join('');
+}
+
+// ─── EXPORTAR EXCEL ───────────────────
+function exportarExcel(){
+  const grupos=agrupar();
+  if(!grupos.length){toast('No hay datos para exportar','r');return;}
+
+  // Hoja 1: Matriz por proceso
+  const matrizRows=[['Código SECOP','Nickname','Etapa','N° Observaciones','Respondidas','Pendientes','Observantes','Observante más activo','Obs. del más activo']];
+  grupos.forEach(g=>{
+    const uniq=[...new Set(g.obs.map(o=>o.observante))];
+    const top=topObs(g.obs);
+    const resp=g.obs.filter(o=>o.respuesta).length;
+    matrizRows.push([g.codigo,g.nick,[...new Set(g.obs.map(o=>o.etapa||'Pliegos'))].join('/'),g.obs.length,resp,g.obs.length-resp,uniq.join(', '),top[0],top[1]]);
+  });
+
+  // Hoja 2: Detalle de todas las observaciones
+  const detalleRows=[['Código SECOP','Nickname','Etapa','Observante','Observación','Respuesta INVIAS','Fecha','Estado']];
+  DATA.forEach(r=>{
+    detalleRows.push([r.codigo,r.nick,r.etapa||'Pliegos',r.observante,r.observacion,r.respuesta||'Sin respuesta',r.fecha,r.respuesta?'Respondida':'Pendiente']);
+  });
+
+  // Hoja 3: Ranking observantes
+  const rm=rankObs();
+  const rankRows=[['#','Observante','Total observaciones','Procesos']];
+  Object.entries(rm).sort((a,b)=>b[1].count-a[1].count).forEach(([n,v],i)=>{
+    rankRows.push([i+1,n,v.count,[...v.procs].join(', ')]);
+  });
+
+  // Generar CSV combinado en múltiples hojas simuladas con HTML table -> XLS trick
+  // Usamos el método de Blob con formato XML Excel para soporte nativo sin librerías
+  const wb = buildXLSX([
+    {name:'Matriz Procesos', rows:matrizRows},
+    {name:'Detalle Observaciones', rows:detalleRows},
+    {name:'Ranking Observantes', rows:rankRows}
+  ]);
+
+  const blob=new Blob([wb],{type:'application/vnd.ms-excel;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='INVIAS_Observaciones_'+new Date().toISOString().slice(0,10)+'.xls';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('Archivo descargado correctamente');
+}
+
+function buildXLSX(sheets){
+  const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  let xml=`<?xml version="1.0" encoding="UTF-8"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:x="urn:schemas-microsoft-com:office:excel">
+<Styles>
+  <Style ss:ID="h"><Font ss:Bold="1" ss:Color="#FFFFFF"/><Interior ss:Color="#00613A" ss:Pattern="Solid"/></Style>
+  <Style ss:ID="s"><Interior ss:Color="#EAF4EF" ss:Pattern="Solid"/></Style>
+  <Style ss:ID="y"><Interior ss:Color="#FEF9E0" ss:Pattern="Solid"/></Style>
+</Styles>`;
+  sheets.forEach(({name,rows})=>{
+    xml+=`<Worksheet ss:Name="${esc(name)}"><Table>`;
+    rows.forEach((row,ri)=>{
+      xml+=`<Row>`;
+      row.forEach(cell=>{
+        const t=typeof cell==='number'?'Number':'String';
+        const style=ri===0?' ss:StyleID="h"':'';
+        xml+=`<Cell${style}><Data ss:Type="${t}">${esc(cell)}</Data></Cell>`;
+      });
+      xml+=`</Row>`;
+    });
+    xml+=`</Table></Worksheet>`;
+  });
+  xml+=`</Workbook>`;
+  return xml;
+}
+
+
+// ─── DASHBOARD PÚBLICO ───────────────
+let chartPubI = null;
+async function abrirDashPub(){
+  showScreen('s-dash-pub');
+  mostrarCargando(true);
+  await load();
+  mostrarCargando(false);
+  renderDashPub();
+}
+function renderDashPub(){
+  const g=agrupar();const rm=rankObs();
+  const total=DATA.length;
+  const nPliegos=DATA.filter(r=>(r.etapa||'Pliegos')==='Pliegos').length;
+  const nPrepliegos=DATA.filter(r=>r.etapa==='Prepliegos').length;
+  const sinR=DATA.filter(r=>!r.respuesta).length;
+
+  document.getElementById('kpiPub').innerHTML=`
+    <div style="background:var(--blanco);border:1px solid var(--g5);border-radius:var(--r);padding:1.1rem 1.25rem;box-shadow:var(--sh-sm);position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--verde);border-radius:var(--r) var(--r) 0 0"></div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--g3);font-weight:600;margin-bottom:6px">Total observaciones</div>
+      <div style="font-size:28px;font-weight:600;font-family:'DM Mono',monospace">${total}</div>
+    </div>
+    <div style="background:var(--blanco);border:1px solid var(--g5);border-radius:var(--r);padding:1.1rem 1.25rem;box-shadow:var(--sh-sm);position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--amarillo);border-radius:var(--r) var(--r) 0 0"></div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--g3);font-weight:600;margin-bottom:6px">Procesos</div>
+      <div style="font-size:28px;font-weight:600;font-family:'DM Mono',monospace">${g.length}</div>
+    </div>
+    <div style="background:var(--blanco);border:1px solid var(--g5);border-radius:var(--r);padding:1.1rem 1.25rem;box-shadow:var(--sh-sm);position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--azul);border-radius:var(--r) var(--r) 0 0"></div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--g3);font-weight:600;margin-bottom:6px">Observantes únicos</div>
+      <div style="font-size:28px;font-weight:600;font-family:'DM Mono',monospace">${Object.keys(rm).length}</div>
+    </div>
+    <div style="background:var(--blanco);border:1px solid var(--g5);border-radius:var(--r);padding:1.1rem 1.25rem;box-shadow:var(--sh-sm);position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--rojo);border-radius:var(--r) var(--r) 0 0"></div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--g3);font-weight:600;margin-bottom:6px">Respondidas</div>
+      <div style="font-size:28px;font-weight:600;font-family:'DM Mono',monospace">${total-sinR}</div>
+      <div style="font-size:11px;color:var(--g3);margin-top:4px">${sinR} pendientes</div>
+    </div>`;
+
+  document.getElementById('etapaPub').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+      <div style="background:var(--verde-pale);border:1px solid var(--verde-mid);border-radius:var(--rsm);padding:1rem 1.25rem">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--verde);margin-bottom:6px">Pliegos</div>
+        <div style="font-size:28px;font-weight:600;font-family:'DM Mono',monospace;color:var(--verde)">${nPliegos}</div>
+        <div style="font-size:11px;color:var(--g3);margin-top:3px">${total?Math.round(nPliegos/total*100):0}% del total</div>
+      </div>
+      <div style="background:#FEF9E0;border:1px solid #e6d870;border-radius:var(--rsm);padding:1rem 1.25rem">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:#7a6400;margin-bottom:6px">Prepliegos</div>
+        <div style="font-size:28px;font-weight:600;font-family:'DM Mono',monospace;color:#7a6400">${nPrepliegos}</div>
+        <div style="font-size:11px;color:var(--g3);margin-top:3px">${total?Math.round(nPrepliegos/total*100):0}% del total</div>
+      </div>
+    </div>`;
+
+  const sO=Object.entries(rm).sort((a,b)=>b[1].count-a[1].count).slice(0,6);
+  const mO=sO[0]?sO[0][1].count:1;
+  document.getElementById('topObsPub').innerHTML=sO.length?sO.map(([n,v2],i)=>`
+    <div class="brow"><span style="font-size:11px;color:var(--g3);min-width:18px;font-family:'DM Mono',monospace">${i+1}</span>
+    <span class="blbl">${n}</span>
+    <div class="btrack"><div class="bfill" style="width:${Math.round(v2.count/mO*100)}%"></div></div>
+    <span class="bnum">${v2.count}</span></div>`).join(''):`<div class="empty" style="padding:1rem 0"><p>Sin datos</p></div>`;
+
+  const sP=g.sort((a,b2)=>b2.obs.length-a.obs.length).slice(0,6);
+  const mP=sP[0]?sP[0].obs.length:1;
+  document.getElementById('topProcPub').innerHTML=sP.length?sP.map((x,i)=>`
+    <div class="brow"><span style="font-size:11px;color:var(--g3);min-width:18px;font-family:'DM Mono',monospace">${i+1}</span>
+    <div style="flex:1;min-width:0"><div class="blbl">${x.nick}</div><div style="font-size:10px;color:var(--g3);font-family:'DM Mono',monospace">${x.codigo}</div></div>
+    <div class="btrack"><div class="bfill" style="width:${Math.round(x.obs.length/mP*100)}%"></div></div>
+    <span class="bnum">${x.obs.length}</span></div>`).join(''):`<div class="empty" style="padding:1rem 0"><p>Sin datos</p></div>`;
+
+  if(chartPubI)chartPubI.destroy();
+  if(!sP.length)return;
+  chartPubI=new Chart(document.getElementById('chartPub'),{
+    type:'bar',
+    data:{labels:sP.map(x=>x.nick.length>16?x.nick.slice(0,15)+'…':x.nick),
+          datasets:[{label:'Observaciones',data:sP.map(x=>x.obs.length),backgroundColor:'rgba(245,168,0,.2)',borderColor:'#E8890A',borderWidth:2,borderRadius:6}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{y:{beginAtZero:true,ticks:{stepSize:1,font:{size:11},color:'#7A837E'},grid:{color:'rgba(0,0,0,.04)'}},
+              x:{ticks:{font:{size:11},color:'#3D4440'},grid:{display:false}}}}
+  });
+}
+
+// ─── INIT ─────────────────────────────
+(async()=>{
+  loadLog();
+  await load();
+  badges();
+})();
+</script>
+</body>
+</html>
